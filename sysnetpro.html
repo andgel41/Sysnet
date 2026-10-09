@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SysNet Pro — Informatique pour professionnels & particuliers</title>
+<meta name="description" content="SysNet Pro : administration systèmes & réseaux pour les entreprises, dépannage informatique, installation, transfert de données et sauvegarde pour les particuliers. À domicile ou à distance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ============================================================
+  //  ⚠️  REMPLACE CES 3 VALEURS PAR TES CLÉS EMAILJS
+  // ============================================================
+  const EMAILJS_PUBLIC_KEY  = 'Nw8GKG8FOAhjImpVU';
+  const EMAILJS_SERVICE_ID  = 'service_pi7irlw';
+  const EMAILJS_TEMPLATE_ID = 'template_vh706mh';
+  // ============================================================
+  (function(){ emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); })();
+</script>
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1218;
+    --bg3: #111820;
+    --border: #1e2d3d;
+    --accent: #00d4ff;
+    --accent2: #0066cc;
+    --accent3: #00ff88;
+    --text: #c8d8e8;
+    --text-dim: #5a7a9a;
+    --text-bright: #e8f4ff;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Syne', sans-serif;
+    --radius: 4px;
+    --glow: 0 0 20px rgba(0, 212, 255, 0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none; z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(8,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--display); font-weight: 800; font-size: 1.1rem;
+    color: var(--text-bright); letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--accent3); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--accent);
+    color: var(--accent) !important; padding: 6px 16px;
+    border-radius: var(--radius); transition: all 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; color: var(--bg) !important; }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 80px 2rem 4rem; z-index: 2; overflow: hidden;
+  }
+  .hero-content { max-width: 900px; margin: 0 auto; width: 100%; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2);
+    color: var(--accent); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 5px 14px; border-radius: 2px;
+    margin-bottom: 2rem; animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before { content: '//'; opacity: 0.5; }
+  .hero-title {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(1.8rem, 5vw, 4.5rem);
+    line-height: 1.05; color: var(--text-bright);
+    letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .hero-title em {
+    font-style: normal; color: var(--accent); position: relative;
+  }
+  .hero-title em::after {
+    content: ''; position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 3px; background: var(--accent); opacity: 0.3; border-radius: 2px;
+  }
+  .hero-sub {
+    font-size: 15px; color: var(--text-dim); max-width: 600px;
+    line-height: 1.8; margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-bottom: 3rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+  .stat-value {
+    font-family: var(--display); font-size: 2rem;
+    font-weight: 800; color: var(--text-bright); line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hero-actions { display: flex; gap: 1rem; animation: fadeUp 0.6s 0.4s ease both; }
+  .btn-primary {
+    background: var(--accent); color: var(--bg);
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    padding: 14px 28px; border: none; border-radius: var(--radius);
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  .btn-primary:hover {
+    background: #00b8d9; transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,212,255,0.3);
+  }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    font-family: var(--mono); font-size: 13px;
+    padding: 14px 28px; border: 1px solid var(--border);
+    border-radius: var(--radius); cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.05); }
+
+  /* TERMINAL */
+  .hero-terminal {
+    position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+    width: 460px; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), var(--glow);
+    animation: fadeUp 0.8s 0.5s ease both; opacity: 0.85;
+  }
+  .terminal-bar {
+    background: var(--bg3); padding: 10px 16px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .td-red { background: #ff5f57; } .td-yellow { background: #ffbd2e; } .td-green { background: #28c840; }
+  .terminal-title { font-size: 11px; color: var(--text-dim); margin-left: 6px; }
+  .terminal-body { padding: 16px 20px; font-size: 12px; line-height: 2; }
+  .t-prompt { color: var(--accent3); } .t-cmd { color: var(--text-bright); }
+  .t-out { color: var(--text-dim); } .t-ok { color: var(--accent3); } .t-warn { color: #ffbd2e; }
+  .t-cursor {
+    display: inline-block; width: 7px; height: 14px;
+    background: var(--accent); vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 2; }
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+  .section-label {
+    font-size: 11px; color: var(--accent); text-transform: uppercase;
+    letter-spacing: 0.15em; margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; color: var(--text-bright);
+    letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1rem;
+  }
+  .section-desc { color: var(--text-dim); max-width: 560px; font-size: 14px; line-height: 1.8; margin-bottom: 3rem; }
+
+  /* SERVICES */
+  #prestations { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+  }
+  .service-card {
+    background: var(--bg2); padding: 2rem;
+    position: relative; transition: background 0.2s;
+  }
+  .service-card:hover { background: var(--bg3); }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--accent); transition: height 0.3s ease;
+  }
+  .service-card:hover::before { height: 100%; }
+  .service-icon { font-size: 1.6rem; margin-bottom: 1rem; display: block; }
+  .service-category { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .service-title { font-family: var(--display); font-size: 1rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.8rem; }
+  .service-desc { font-size: 12px; color: var(--text-dim); line-height: 1.7; margin-bottom: 1rem; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 10px; padding: 3px 8px; border-radius: 2px; border: 1px solid var(--border); color: var(--text-dim); letter-spacing: 0.05em; }
+
+  /* CHOIX PRO / PARTICULIER */
+  .audience-choice {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    max-width: 720px; animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .audience-card {
+    display: flex; flex-direction: column; gap: 0.5rem;
+    background: rgba(13,18,24,0.85); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.4rem 1.5rem;
+    text-decoration: none; color: var(--text);
+    transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .audience-card:hover {
+    border-color: var(--accent); transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,212,255,0.15);
+  }
+  .audience-card.perso:hover { border-color: var(--accent3); box-shadow: 0 10px 30px rgba(0,255,136,0.12); }
+  .audience-icon { font-size: 1.6rem; }
+  .audience-title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--text-bright); }
+  .audience-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+  .audience-link { font-size: 12px; font-weight: 700; color: var(--accent); margin-top: 0.4rem; }
+  .audience-card.perso .audience-link { color: var(--accent3); }
+
+  /* PARTICULIERS */
+  #particuliers { background: var(--bg); }
+  #particuliers .section-label { color: var(--accent3); }
+  #particuliers .section-label::before { background: var(--accent3); }
+  #particuliers .service-card::before { background: var(--accent3); }
+  .perso-desc { font-size: 13px; color: var(--text); line-height: 1.7; }
+  .perso-examples { list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 4px; }
+  .perso-examples li { font-size: 12px; color: var(--text-dim); }
+  .perso-examples li::before { content: '✓ '; color: var(--accent3); }
+  .perso-strip {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem; margin-top: 2.5rem;
+  }
+  .perso-strip-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.1rem 1.2rem;
+  }
+  .perso-strip-item .ico { font-size: 1.3rem; line-height: 1; }
+  .perso-strip-item strong { display: block; color: var(--text-bright); font-family: var(--display); font-size: 0.9rem; margin-bottom: 2px; }
+  .perso-strip-item span { font-size: 12px; color: var(--text-dim); }
+  .perso-cta { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-green { background: var(--accent3); }
+  .btn-green:hover { background: #00e07a; box-shadow: 0 8px 30px rgba(0,255,136,0.25); }
+
+  /* SÉLECTEUR TYPE DE CLIENT (formulaire) */
+  .client-type { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+  .client-type input { position: absolute; opacity: 0; pointer-events: none; }
+  .client-type label {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px; border: 1px solid var(--border); border-radius: var(--radius);
+    font-size: 13px; color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+    text-transform: none; letter-spacing: 0;
+  }
+  .client-type label:hover { border-color: var(--text-dim); color: var(--text); }
+  .client-type input:checked + label { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.06); }
+  .client-type input:focus-visible + label { box-shadow: 0 0 0 3px rgba(0,212,255,0.25); }
+  .pro-only[hidden], .perso-only[hidden] { display: none !important; }
+
+  /* VIGNETTES CLIQUABLES */
+  .services-grid .service-card { cursor: pointer; display: flex; flex-direction: column; }
+  .services-grid .service-card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  /* Le détail est caché dans la vignette, il s'affiche dans la fenêtre */
+  .services-grid .service-card .service-desc,
+  .services-grid .service-card .perso-desc,
+  .services-grid .service-card .service-tags,
+  .services-grid .service-card .perso-examples { display: none; }
+  .services-grid .service-title { margin-bottom: 0.6rem; }
+  .card-more {
+    margin-top: auto; font-size: 11px; color: var(--accent);
+    letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+  .service-card:hover .card-more { opacity: 1; }
+  #particuliers .card-more { color: var(--accent3); }
+
+  /* FENÊTRE DE DÉTAIL */
+  .svc-modal {
+    position: fixed; inset: 0; z-index: 200;
+    display: none; align-items: center; justify-content: center;
+    padding: 1rem; background: rgba(4,7,10,0.8); backdrop-filter: blur(6px);
+  }
+  .svc-modal.open { display: flex; animation: fadeIn 0.2s ease both; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .svc-modal-box {
+    position: relative; width: 100%; max-width: 520px; max-height: calc(100vh - 2rem); overflow-y: auto;
+    background: var(--bg2); border: 1px solid var(--border); border-top: 3px solid var(--accent);
+    border-radius: 6px; padding: 2.2rem 2rem 2rem;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), var(--glow);
+    animation: fadeUp 0.25s ease both;
+  }
+  .svc-modal.perso .svc-modal-box { border-top-color: var(--accent3); }
+  .svc-modal-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px; border-radius: var(--radius);
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 16px; cursor: pointer; transition: all 0.2s;
+  }
+  .svc-modal-close:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-modal-icon { font-size: 2rem; display: block; margin-bottom: 0.8rem; }
+  .svc-modal-title { font-family: var(--display); font-size: 1.35rem; font-weight: 700; color: var(--text-bright); margin-bottom: 1rem; line-height: 1.25; padding-right: 2rem; }
+  .svc-modal-body .service-desc, .svc-modal-body .perso-desc { font-size: 13px; color: var(--text); line-height: 1.8; margin-bottom: 1rem; }
+  .svc-modal-body .perso-examples { margin: 0 0 1rem; }
+  .svc-modal-body .perso-examples li { font-size: 13px; }
+  .svc-modal-body .service-tags { margin-bottom: 1rem; }
+  .svc-modal-cta { width: 100%; justify-content: center; margin-top: 0.8rem; }
+
+  /* PROCESS */
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .step { position: relative; padding-left: 1.5rem; border-left: 1px solid var(--border); }
+  .step-num {
+    position: absolute; left: -14px; top: 0;
+    width: 28px; height: 28px; background: var(--bg);
+    border: 1px solid var(--accent); color: var(--accent);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; border-radius: 2px;
+  }
+  .step-title { font-family: var(--display); font-size: 0.95rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.5rem; margin-top: 4px; padding-left: 1rem; }
+  .step-desc { font-size: 12px; color: var(--text-dim); padding-left: 1rem; line-height: 1.7; }
+
+  /* CONTACT */
+  #contact { background: var(--bg); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; align-items: start; }
+  .contact-info h3 { font-family: var(--display); font-size: 1.1rem; font-weight: 600; color: var(--text-bright); margin-bottom: 1rem; }
+  .contact-info p { color: var(--text-dim); font-size: 13px; line-height: 1.8; margin-bottom: 2rem; }
+  .contact-detail { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); }
+  .contact-detail-icon { font-size: 1.1rem; width: 32px; }
+
+  /* FORM */
+  .form-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 2.5rem; }
+  .form-title { font-family: var(--display); font-size: 1.2rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.5rem; }
+  .form-subtitle { font-size: 12px; color: var(--text-dim); margin-bottom: 2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.2rem; }
+  .form-group label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+  .form-group input, .form-group select, .form-group textarea {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); font-family: var(--mono); font-size: 13px;
+    padding: 10px 14px; border-radius: var(--radius); outline: none;
+    transition: border-color 0.2s; width: 100%;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-dim); opacity: 0.5; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+  }
+  .form-group select option { background: var(--bg2); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+  .checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text); cursor: pointer; }
+  .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+  .form-submit {
+    width: 100%; background: var(--accent); color: var(--bg);
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    padding: 14px; border: none; border-radius: var(--radius);
+    cursor: pointer; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .form-submit:hover { background: #00b8d9; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,212,255,0.25); }
+  .form-success { display: none; text-align: center; padding: 2rem; }
+  .form-error {
+    display: none; background: rgba(255,80,80,0.08);
+    border: 1px solid rgba(255,80,80,0.3); border-radius: var(--radius);
+    color: #ff6b6b; font-size: 12px; padding: 12px 16px;
+    margin-bottom: 1rem; line-height: 1.6;
+  }
+  .form-error.visible { display: block; }
+  .form-submit.loading { opacity: 0.6; pointer-events: none; cursor: not-allowed; }
+  .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .form-success h3 { font-family: var(--display); color: var(--accent3); margin-bottom: 0.5rem; }
+  .form-success p { color: var(--text-dim); font-size: 13px; }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 2;
+    border-top: 1px solid var(--border); background: var(--bg2);
+    padding: 2rem; display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-left { font-size: 12px; color: var(--text-dim); }
+  .footer-left strong { color: var(--text); }
+  .footer-right { font-size: 11px; color: var(--text-dim); }
+  .footer-right span { color: var(--accent3); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── HAMBURGER ─────────────────────────────────────────────── */
+  .nav-burger {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+  .nav-burger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--text); border-radius: 2px;
+    transition: all 0.3s ease; transform-origin: center;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Menu mobile overlay */
+  .nav-mobile {
+    display: none;
+    position: fixed; top: 60px; left: 0; right: 0;
+    background: rgba(8,12,16,0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem 2rem;
+    z-index: 99;
+    flex-direction: column; gap: 0;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile li { list-style: none; border-bottom: 1px solid var(--border); }
+  .nav-mobile li:last-child { border-bottom: none; margin-top: 1rem; }
+  .nav-mobile a {
+    display: block; padding: 14px 0;
+    color: var(--text); text-decoration: none;
+    font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-mobile a:hover { color: var(--accent); }
+  .nav-mobile .nav-cta {
+    display: block; text-align: center;
+    border: 1px solid var(--accent); color: var(--accent) !important;
+    padding: 12px 0; border-radius: var(--radius);
+  }
+
+  /* ── TABLET (max 1024px) ────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .hero-terminal { display: none; }
+    .hero-content { max-width: 100%; }
+    .contact-grid { gap: 2.5rem; }
+    .services-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  }
+
+  /* ── MOBILE (max 768px) ─────────────────────────────────────── */
+  @media (max-width: 768px) {
+    /* Nav */
+    .nav-links { display: none; }
+    .nav-burger { display: flex; }
+
+    /* Hero */
+    .hero {
+      padding: 80px 1.25rem 3rem;
+      text-align: center;
+      min-height: auto;
+      padding-top: 100px;
+    }
+    .hero-tag { font-size: 10px; }
+    .hero-sub { font-size: 13px; max-width: 100%; }
+    .hero-stats {
+      gap: 1.5rem; justify-content: center;
+      flex-wrap: wrap;
+    }
+    .stat-value { font-size: 1.6rem; }
+    .hero-actions {
+      flex-direction: column; align-items: center; gap: 0.75rem;
+    }
+    .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+    .audience-choice { grid-template-columns: 1fr; text-align: left; }
+    .perso-cta { flex-direction: column; }
+
+    /* Sections */
+    .section-inner { padding: 3.5rem 1.25rem; }
+    .section-desc { max-width: 100%; }
+
+    /* Services */
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { padding: 1.5rem; }
+
+    /* Process */
+    .process-steps { grid-template-columns: 1fr; gap: 1.5rem; }
+
+    /* Contact */
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+    /* Formulaire */
+    .form-card { padding: 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-checkboxes { grid-template-columns: 1fr; }
+    .client-type { grid-template-columns: 1fr 1fr; }
+
+    /* Footer */
+    footer { flex-direction: column; text-align: center; padding: 1.5rem; }
+  }
+
+  /* ── TRÈS PETIT (max 400px) ─────────────────────────────────── */
+  @media (max-width: 400px) {
+    nav { padding: 0 1rem; }
+    .hero { padding: 90px 1rem 2.5rem; }
+    .hero-title { font-size: 1.7rem; letter-spacing: -0.01em; }
+    .section-inner { padding: 2.5rem 1rem; }
+    .form-card { padding: 1.25rem; }
+    .hero-stats { gap: 1rem; }
+    .stat-value { font-size: 1.4rem; }
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-dot"></div>
+    Sys<span>Net</span>Pro
+  </a>
+  <ul class="nav-links">
+    <li><a href="#particuliers">Particuliers</a></li>
+    <li><a href="#prestations">Professionnels</a></li>
+    <li><a href="#processus">Processus</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Demander un devis</a></li>
+  </ul>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Menu mobile -->
+<ul class="nav-mobile" id="navMobile">
+  <li><a href="#particuliers" class="nav-mobile-link">Particuliers</a></li>
+  <li><a href="#prestations" class="nav-mobile-link">Professionnels</a></li>
+  <li><a href="#processus" class="nav-mobile-link">Processus</a></li>
+  <li><a href="#contact" class="nav-mobile-link">Contact</a></li>
+  <li><a href="#contact" class="nav-cta nav-mobile-link">Demander un devis</a></li>
+</ul>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Informatique · Sur site & à distance</div>
+    <h1 class="hero-title">
+      Votre informatique,<br>
+      entre <em>de bonnes mains</em>
+    </h1>
+    <p class="hero-sub">
+      Solutions informatiques pour professionnels et particuliers :
+      administration systèmes & réseaux, maintenance, dépannage,
+      sauvegarde et assistance — sur place ou à distance.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-value">24h</span>
+        <span class="stat-label">Réponse (jours ouvrés)</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">🏠 / 💻</span>
+        <span class="stat-label">Sur place ou à distance</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">Devis</span>
+        <span class="stat-label">Avant toute intervention</span>
+      </div>
+    </div>
+    <div class="audience-choice">
+      <a href="#particuliers" class="audience-card perso">
+        <span class="audience-icon">🏠</span>
+        <span class="audience-title">Vous êtes un particulier</span>
+        <span class="audience-desc">Ordinateur en panne ou lent, installation, transfert de données, sauvegarde de vos photos et documents.</span>
+        <span class="audience-link">→ Services aux particuliers</span>
+      </a>
+      <a href="#prestations" class="audience-card">
+        <span class="audience-icon">🏢</span>
+        <span class="audience-title">Vous êtes une entreprise</span>
+        <span class="audience-desc">Administration systèmes & réseaux, sauvegarde, sécurité, maintenance et support informatique.</span>
+        <span class="audience-link">→ Services aux professionnels</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-terminal">
+    <div class="terminal-bar">
+      <div class="terminal-dot td-red"></div>
+      <div class="terminal-dot td-yellow"></div>
+      <div class="terminal-dot td-green"></div>
+      <span class="terminal-title">admin@sysnetpro ~ </span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">❯</span> <span class="t-cmd">ping 192.168.1.1</span></div>
+      <div class="t-ok">64 bytes from gateway: icmp_seq=1 ttl=64</div>
+      <div class="t-ok">64 bytes from gateway: icmp_seq=2 ttl=64</div>
+      <br>
+      <div><span class="t-prompt">❯</span> <span class="t-cmd">systemctl status nginx</span></div>
+      <div class="t-ok">● nginx.service — Active: active (running)</div>
+      <br>
+      <div><span class="t-prompt">❯</span> <span class="t-cmd">check-backup --last</span></div>
+      <div class="t-out">→ Backup completed: 2026-03-22 02:00</div>
+      <div class="t-ok">✓ All systems nominal</div>
+      <br>
+      <div><span class="t-prompt">❯</span> <span class="t-cmd">Get-ADUser -Filter * | Measure</span></div>
+      <div class="t-out">Count : 247 users synced</div>
+      <br>
+      <div><span class="t-prompt">❯</span> <span class="t-cmd">scan-vuln --target all</span></div>
+      <div class="t-warn">⚠ 3 patches pending — scheduling...</div>
+      <div class="t-ok">✓ No critical CVE detected</div>
+      <br>
+      <div><span class="t-prompt">❯</span> <span class="t-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="particuliers">
+  <div class="section-inner">
+    <div class="section-label">Particuliers</div>
+    <h2 class="section-title">Votre ordinateur<br>vous pose problème ?</h2>
+    <p class="section-desc">Ordinateur lent ou en panne, logiciel à installer, nouvel ordinateur à mettre en route, photos à mettre à l'abri… Je vous aide simplement, chez vous ou à distance, avec des explications claires et sans jargon.</p>
+
+    <div class="services-grid">
+
+      <div class="service-card" data-client-type="particulier" data-service="Ordinateur en panne / ne démarre plus">
+        <span class="service-icon">🔧</span>
+        <div class="service-title">Dépannage & réparation</div>
+        <p class="perso-desc">Votre ordinateur ne démarre plus, plante ou affiche des messages d'erreur ? Je trouve la cause et je le répare.</p>
+        <ul class="perso-examples">
+          <li>Ordinateur qui ne s'allume plus</li>
+          <li>Écran bleu, Windows qui plante</li>
+          <li>Remplacement de pièce (disque, mémoire…)</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-client-type="particulier" data-service="Ordinateur lent / virus">
+        <span class="service-icon">🐢</span>
+        <div class="service-title">Ordinateur lent</div>
+        <p class="perso-desc">Votre PC met des minutes à démarrer ou rame au quotidien ? Je le nettoie et l'optimise pour qu'il retrouve sa vitesse.</p>
+        <ul class="perso-examples">
+          <li>Nettoyage des programmes inutiles</li>
+          <li>Suppression de virus et publicités</li>
+          <li>Mises à jour de Windows</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-client-type="particulier" data-service="Installation de logiciel / imprimante">
+        <span class="service-icon">💿</span>
+        <div class="service-title">Installation de logiciels</div>
+        <p class="perso-desc">Je vous installe et vous configure les logiciels dont vous avez besoin, et je vous montre comment les utiliser.</p>
+        <ul class="perso-examples">
+          <li>Bureautique (Word, Excel, LibreOffice…)</li>
+          <li>Antivirus, navigateur, messagerie</li>
+          <li>Imprimante et scanner</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-client-type="particulier" data-service="Transfert de données vers un nouvel ordinateur">
+        <span class="service-icon">🔄</span>
+        <div class="service-title">Transfert de données</div>
+        <p class="perso-desc">Vous changez d'ordinateur ? Je transfère tout ce qui compte de l'ancien vers le nouveau, sans rien perdre.</p>
+        <ul class="perso-examples">
+          <li>Photos, vidéos, documents</li>
+          <li>Emails, contacts, favoris</li>
+          <li>Mise en route du nouvel ordinateur</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-client-type="particulier" data-service="Sauvegarde de mes photos et documents">
+        <span class="service-icon">💾</span>
+        <div class="service-title">Sauvegarde de vos données</div>
+        <p class="perso-desc">Une panne ou un vol, et des années de souvenirs disparaissent. Je mets en place une sauvegarde automatique pour les protéger.</p>
+        <ul class="perso-examples">
+          <li>Sauvegarde sur disque externe</li>
+          <li>Sauvegarde en ligne (cloud)</li>
+          <li>Récupération de fichiers effacés (selon le cas)</li>
+        </ul>
+      </div>
+
+      <div class="service-card" data-client-type="particulier" data-service="Internet / Wi-Fi">
+        <span class="service-icon">📶</span>
+        <div class="service-title">Internet & Wi-Fi</div>
+        <p class="perso-desc">Le Wi-Fi ne capte pas dans certaines pièces ou la connexion coupe sans arrêt ? J'améliore votre réseau à la maison.</p>
+        <ul class="perso-examples">
+          <li>Installation et réglage de la box</li>
+          <li>Wi-Fi faible dans certaines pièces</li>
+          <li>Connexion des appareils (TV, imprimante…)</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="perso-strip">
+      <div class="perso-strip-item"><span class="ico">🏠</span><div><strong>À domicile</strong><span>Je me déplace chez vous pour intervenir directement sur votre matériel.</span></div></div>
+      <div class="perso-strip-item"><span class="ico">💻</span><div><strong>À distance</strong><span>Pour beaucoup de problèmes, je peux intervenir directement sur votre ordinateur depuis chez moi.</span></div></div>
+      <div class="perso-strip-item"><span class="ico">📝</span><div><strong>Prix annoncé avant</strong><span>Vous connaissez le tarif avant que je commence. Pas de mauvaise surprise.</span></div></div>
+    </div>
+
+    <div class="perso-cta">
+      <a href="#contact" class="btn-primary btn-green" data-client-type="particulier">→ Demander une intervention</a>
+    </div>
+  </div>
+</section>
+
+<section id="prestations">
+  <div class="section-inner">
+    <div class="section-label">Professionnels</div>
+    <h2 class="section-title">Services aux entreprises</h2>
+    <p class="section-desc">Administration, sécurisation et maintenance de votre système informatique : serveurs, réseau, postes de travail et sauvegardes.</p>
+
+    <div class="services-grid">
+
+      <div class="service-card" data-client-type="professionnel" data-service="Administration Windows Server / Active Directory">
+        <span class="service-icon">🪟</span>
+        <div class="service-category">Systèmes</div>
+        <div class="service-title">Administration Windows Server</div>
+        <p class="service-desc">Installation, configuration et maintenance de serveurs Windows. Gestion des rôles AD, DNS, DHCP, GPO, RDS, WSUS et plus encore.</p>
+        <div class="service-tags">
+          <span class="tag">Windows Server 2019/2022</span><span class="tag">Active Directory</span><span class="tag">GPO</span><span class="tag">WSUS</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Administration Linux">
+        <span class="service-icon">🐧</span>
+        <div class="service-category">Systèmes</div>
+        <div class="service-title">Administration Linux</div>
+        <p class="service-desc">Déploiement et administration de serveurs Linux. Services web, bases de données, messagerie et sécurisation système.</p>
+        <div class="service-tags">
+          <span class="tag">Debian/Ubuntu</span><span class="tag">RHEL/CentOS</span><span class="tag">Nginx/Apache</span><span class="tag">Shell scripting</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Virtualisation (VMware / Hyper-V / Proxmox)">
+        <span class="service-icon">⚙️</span>
+        <div class="service-category">Infrastructure</div>
+        <div class="service-title">Virtualisation</div>
+        <p class="service-desc">Mise en place et gestion de plateformes de virtualisation. Optimisation des ressources et haute disponibilité.</p>
+        <div class="service-tags">
+          <span class="tag">VMware vSphere/ESXi</span><span class="tag">Hyper-V</span><span class="tag">Proxmox</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Architecture &amp; Configuration Réseau">
+        <span class="service-icon">🌐</span>
+        <div class="service-category">Réseau</div>
+        <div class="service-title">Architecture & Configuration Réseau</div>
+        <p class="service-desc">Conception et déploiement d'architectures réseau LAN/WAN. Configuration de switches, routeurs et équipements actifs.</p>
+        <div class="service-tags">
+          <span class="tag">Cisco IOS</span><span class="tag">VLANs</span><span class="tag">OSPF/BGP</span><span class="tag">QoS</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Firewall &amp; Sécurité périmétrique">
+        <span class="service-icon">🔒</span>
+        <div class="service-category">Sécurité</div>
+        <div class="service-title">Firewall & Sécurité périmétrique</div>
+        <p class="service-desc">Configuration et maintien de pare-feu. Segmentation réseau, filtrage applicatif et politiques de sécurité adaptées.</p>
+        <div class="service-tags">
+          <span class="tag">pfSense/OPNsense</span><span class="tag">FortiGate</span><span class="tag">Cisco ASA</span><span class="tag">iptables</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="VPN &amp; Accès distant">
+        <span class="service-icon">🔐</span>
+        <div class="service-category">Réseau / Sécurité</div>
+        <div class="service-title">VPN & Accès distant</div>
+        <p class="service-desc">Mise en place de solutions VPN site-à-site et nomade pour sécuriser les accès distants de vos collaborateurs.</p>
+        <div class="service-tags">
+          <span class="tag">OpenVPN</span><span class="tag">WireGuard</span><span class="tag">IPSec</span><span class="tag">SSL-VPN</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Sauvegarde &amp; Plan de reprise (PRA/PCA)">
+        <span class="service-icon">💾</span>
+        <div class="service-category">Continuité</div>
+        <div class="service-title">Sauvegarde & Plan de reprise</div>
+        <p class="service-desc">Conception et mise en œuvre de stratégies de sauvegarde (règle 3-2-1). Tests de restauration et documentation PRA/PCA.</p>
+        <div class="service-tags">
+          <span class="tag">Veeam Backup</span><span class="tag">Bacula</span><span class="tag">rsync</span><span class="tag">PRA/PCA</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Cloud &amp; Infrastructure hybride">
+        <span class="service-icon">☁️</span>
+        <div class="service-category">Cloud</div>
+        <div class="service-title">Cloud & Infrastructure hybride</div>
+        <p class="service-desc">Migration, déploiement et administration de services cloud. Architectures hybrides on-premise/cloud adaptées à votre budget.</p>
+        <div class="service-tags">
+          <span class="tag">Microsoft Azure</span><span class="tag">AWS</span><span class="tag">Office 365</span><span class="tag">Azure AD</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Monitoring &amp; Supervision">
+        <span class="service-icon">📊</span>
+        <div class="service-category">Supervision</div>
+        <div class="service-title">Monitoring & Supervision</div>
+        <p class="service-desc">Déploiement de solutions de supervision pour anticiper les pannes. Tableaux de bord, alertes et rapports de disponibilité.</p>
+        <div class="service-tags">
+          <span class="tag">Zabbix</span><span class="tag">Nagios/Centreon</span><span class="tag">Grafana</span><span class="tag">PRTG</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Automatisation &amp; Scripting">
+        <span class="service-icon">🤖</span>
+        <div class="service-category">Automatisation</div>
+        <div class="service-title">Automatisation & Scripting</div>
+        <p class="service-desc">Automatisation de tâches répétitives et déploiement d'infrastructures. Scripts et outils DevOps adaptés à votre environnement.</p>
+        <div class="service-tags">
+          <span class="tag">PowerShell</span><span class="tag">Bash</span><span class="tag">Ansible</span><span class="tag">Python</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Messagerie &amp; Collaboration">
+        <span class="service-icon">📧</span>
+        <div class="service-category">Collaboration</div>
+        <div class="service-title">Messagerie & Collaboration</div>
+        <p class="service-desc">Administration de serveurs de messagerie et plateformes collaboratives. Migration, sécurisation et anti-spam.</p>
+        <div class="service-tags">
+          <span class="tag">Exchange</span><span class="tag">Office 365</span><span class="tag">Postfix</span><span class="tag">Zimbra</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Audit &amp; Cybersécurité">
+        <span class="service-icon">🛡️</span>
+        <div class="service-category">Sécurité</div>
+        <div class="service-title">Audit & Cybersécurité</div>
+        <p class="service-desc">Audit de sécurité, analyse des risques, recommandations et mise en conformité. Sensibilisation des équipes.</p>
+        <div class="service-tags">
+          <span class="tag">Audit SI</span><span class="tag">ANSSI / ISO 27001</span><span class="tag">RGPD</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Support &amp; Helpdesk N2/N3">
+        <span class="service-icon">🎧</span>
+        <div class="service-category">Support</div>
+        <div class="service-title">Support & Helpdesk N2/N3</div>
+        <p class="service-desc">Prise en charge des incidents complexes, résolution et documentation. Intervention sur site ou à distance selon vos besoins.</p>
+        <div class="service-tags">
+          <span class="tag">GLPI</span><span class="tag">TeamViewer</span><span class="tag">RDP</span><span class="tag">Astreinte</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Infrastructure Wi-Fi entreprise">
+        <span class="service-icon">📡</span>
+        <div class="service-category">Réseau</div>
+        <div class="service-title">Infrastructure Wi-Fi entreprise</div>
+        <p class="service-desc">Audit, conception et déploiement d'infrastructures Wi-Fi. Couverture optimisée, sécurité WPA3 et authentification 802.1X.</p>
+        <div class="service-tags">
+          <span class="tag">Ubiquiti UniFi</span><span class="tag">Cisco Meraki</span><span class="tag">802.1X / RADIUS</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Téléphonie IP (ToIP/VoIP)">
+        <span class="service-icon">📞</span>
+        <div class="service-category">Téléphonie</div>
+        <div class="service-title">Téléphonie IP (ToIP / VoIP)</div>
+        <p class="service-desc">Mise en place et administration de systèmes de téléphonie sur IP. Migration PABX vers IPBX, trunk SIP et postes IP.</p>
+        <div class="service-tags">
+          <span class="tag">Asterisk</span><span class="tag">FreePBX</span><span class="tag">3CX</span><span class="tag">SIP/RTP</span>
+        </div>
+      </div>
+
+      <div class="service-card" data-client-type="professionnel" data-service="Conteneurisation &amp; DevOps">
+        <span class="service-icon">🐳</span>
+        <div class="service-category">DevOps / Infra</div>
+        <div class="service-title">Conteneurisation & DevOps</div>
+        <p class="service-desc">Déploiement et gestion d'applications conteneurisées. Pipelines CI/CD et environnements reproductibles.</p>
+        <div class="service-tags">
+          <span class="tag">Docker</span><span class="tag">Docker Compose</span><span class="tag">Kubernetes</span><span class="tag">GitLab CI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="processus">
+  <div class="section-inner">
+    <div class="section-label">Comment ça marche</div>
+    <h2 class="section-title">Un processus clair<br>du devis à la livraison</h2>
+    <p class="section-desc">Que vous soyez un particulier ou une entreprise, chaque intervention commence par une analyse de votre besoin. Voici comment je travaille.</p>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Prise de contact</div>
+        <p class="step-desc">Vous décrivez votre besoin via le formulaire. Je vous réponds sous 24h pour fixer un échange.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Diagnostic</div>
+        <p class="step-desc">J'identifie l'origine du problème ou j'analyse votre installation existante pour cibler les priorités.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Devis détaillé</div>
+        <p class="step-desc">Vous recevez un devis transparent avec le périmètre exact, le délai et le tarif.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Exécution</div>
+        <p class="step-desc">J'interviens chez vous, dans vos locaux ou à distance, en vous tenant informé de l'avancement.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-title">Suivi</div>
+        <p class="step-desc">Je vous explique ce qui a été fait et je reste disponible si un souci réapparaît.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Parlons de votre besoin</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Un souci informatique ou un projet ?</h3>
+        <p>Particulier ou professionnel, décrivez-moi votre besoin : un dépannage, une installation, une sauvegarde à mettre en place ou une mission plus importante. Je vous propose une solution adaptée à votre situation et à votre budget.</p>
+        <p>Interventions à domicile, sur site ou à distance partout en France.</p>
+        <div class="contact-detail"><span class="contact-detail-icon">📧</span><span><a href="mailto:contact@sysnetpro.fr" style="color:inherit">contact@sysnetpro.fr</a></span></div>
+        <div class="contact-detail"><span class="contact-detail-icon">📞</span><span>+33 6 XX XX XX XX</span></div>
+        <div class="contact-detail"><span class="contact-detail-icon">📍</span><span>Interventions sur site ou à distance</span></div>
+        <div class="contact-detail"><span class="contact-detail-icon">⏱️</span><span>Réponse sous 24h ouvrées</span></div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-title">Demande d'intervention / devis</div>
+        <div class="form-subtitle">// Remplissez ce formulaire — je vous recontacte rapidement</div>
+        <form id="quoteForm" onsubmit="submitForm(event)" novalidate>
+          <!-- Honeypot anti-bot (caché) -->
+          <div style="display:none" aria-hidden="true">
+            <input type="text" name="website" id="hp_website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-error" id="formError"></div>
+
+          <div class="form-group"><label>Vous êtes *</label></div>
+          <div class="client-type" role="radiogroup" aria-label="Vous êtes">
+            <input type="radio" name="client_type" id="ct_perso" value="Particulier" checked>
+            <label for="ct_perso">🏠 Particulier</label>
+            <input type="radio" name="client_type" id="ct_pro" value="Professionnel">
+            <label for="ct_pro">🏢 Professionnel</label>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group"><label>Prénom *</label><input id="f_prenom" type="text" placeholder="Jean" required></div>
+            <div class="form-group"><label>Nom *</label><input id="f_nom" type="text" placeholder="Dupont" required></div>
+          </div>
+          <div class="form-group"><label>Email *</label><input id="f_email" type="email" placeholder="jean.dupont@email.fr" required></div>
+          <div class="form-row">
+            <div class="form-group pro-only" hidden><label>Société</label><input id="f_societe" type="text" placeholder="Mon Entreprise SARL"></div>
+            <div class="form-group perso-only"><label>Ville</label><input id="f_ville" type="text" placeholder="Votre ville"></div>
+            <div class="form-group"><label>Téléphone</label><input id="f_tel" type="tel" placeholder="06 XX XX XX XX"></div>
+          </div>
+          <div class="form-group perso-only">
+            <label>Votre besoin *</label>
+            <select id="f_prestation_perso" required>
+              <option value="" disabled selected>-- Sélectionnez --</option>
+              <option>Ordinateur en panne / ne démarre plus</option>
+              <option>Ordinateur lent / virus</option>
+              <option>Installation de logiciel / imprimante</option>
+              <option>Transfert de données vers un nouvel ordinateur</option>
+              <option>Sauvegarde de mes photos et documents</option>
+              <option>Internet / Wi-Fi</option>
+              <option>Autre demande</option>
+            </select>
+          </div>
+          <div class="form-group pro-only" hidden>
+            <label>Type de prestation *</label>
+            <select id="f_prestation" required disabled>
+              <option value="" disabled selected>-- Sélectionnez une prestation --</option>
+              <option>Administration Windows Server / Active Directory</option>
+              <option>Administration Linux</option>
+              <option>Virtualisation (VMware / Hyper-V / Proxmox)</option>
+              <option>Architecture & Configuration Réseau</option>
+              <option>Firewall & Sécurité périmétrique</option>
+              <option>VPN & Accès distant</option>
+              <option>Sauvegarde & Plan de reprise (PRA/PCA)</option>
+              <option>Cloud & Infrastructure hybride</option>
+              <option>Monitoring & Supervision</option>
+              <option>Automatisation & Scripting</option>
+              <option>Messagerie & Collaboration</option>
+              <option>Audit & Cybersécurité</option>
+              <option>Support & Helpdesk N2/N3</option>
+              <option>Infrastructure Wi-Fi entreprise</option>
+              <option>Téléphonie IP (ToIP/VoIP)</option>
+              <option>Conteneurisation & DevOps</option>
+              <option>Autre / Multiple prestations</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Type d'intervention</label></div>
+          <div class="form-checkboxes perso-only">
+            <label class="checkbox-item"><input type="checkbox" class="cb_intervention" value="À domicile"> À domicile</label>
+            <label class="checkbox-item"><input type="checkbox" class="cb_intervention" value="À distance"> À distance</label>
+          </div>
+          <div class="form-checkboxes pro-only" hidden>
+            <label class="checkbox-item"><input type="checkbox" class="cb_intervention" value="Mission ponctuelle"> Mission ponctuelle</label>
+            <label class="checkbox-item"><input type="checkbox" class="cb_intervention" value="Contrat de maintenance"> Contrat de maintenance</label>
+            <label class="checkbox-item"><input type="checkbox" class="cb_intervention" value="Intervention sur site"> Intervention sur site</label>
+            <label class="checkbox-item"><input type="checkbox" class="cb_intervention" value="Télémaintenance"> Télémaintenance</label>
+          </div>
+          <div class="form-group">
+            <label>Décrivez votre besoin *</label>
+            <textarea id="f_message" placeholder="Ex. : mon ordinateur portable est devenu très lent depuis quelques semaines..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="f_submit">→ Envoyer ma demande</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">✅</div>
+          <h3>Demande envoyée !</h3>
+          <p>Je vous recontacte sous 24h ouvrées. Merci pour votre confiance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fenêtre de détail d'une prestation (remplie par le script) -->
+<div class="svc-modal" id="svcModal" aria-hidden="true">
+  <div class="svc-modal-box" role="dialog" aria-modal="true" aria-labelledby="svcModalTitle">
+    <button type="button" class="svc-modal-close" id="svcModalClose" aria-label="Fermer">✕</button>
+    <span class="svc-modal-icon" id="svcModalIcon"></span>
+    <div class="service-category" id="svcModalCat"></div>
+    <h3 class="svc-modal-title" id="svcModalTitle"></h3>
+    <div class="svc-modal-body" id="svcModalBody"></div>
+    <button type="button" class="btn-primary svc-modal-cta" id="svcModalCta">→ Être contacté pour cette prestation</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <strong>SysNetPro</strong> — Informatique pour professionnels & particuliers<br>
+    Micro-entreprise · SIRET : XXXXXXXX · © 2026
+  </div>
+  <div class="footer-right">Fait avec <span>♥</span> & beaucoup de café ☕</div>
+</footer>
+
+<script>
+  // ── Menu hamburger ─────────────────────────────────────────────────────
+  const burger    = document.getElementById('navBurger');
+  const mobileNav = document.getElementById('navMobile');
+
+  burger.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Ferme le menu quand on clique sur un lien
+  document.querySelectorAll('.nav-mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // ── Formulaire : bascule Particulier / Professionnel ────────────────────
+  function setClientType(type) {
+    const isPro = type === 'Professionnel';
+    document.getElementById(isPro ? 'ct_pro' : 'ct_perso').checked = true;
+    document.querySelectorAll('.pro-only').forEach(el => el.hidden = !isPro);
+    document.querySelectorAll('.perso-only').forEach(el => el.hidden = isPro);
+    document.getElementById('f_prestation').disabled = !isPro;
+    document.getElementById('f_prestation_perso').disabled = isPro;
+    // Décoche les cases du bloc masqué pour ne pas les envoyer
+    document.querySelectorAll(`${isPro ? '.perso-only' : '.pro-only'} .cb_intervention`)
+      .forEach(cb => cb.checked = false);
+    document.getElementById('f_email').placeholder = isPro ? 'jean.dupont@entreprise.fr' : 'jean.dupont@email.fr';
+    document.getElementById('f_message').placeholder = isPro
+      ? 'Décrivez votre infrastructure actuelle, le problème rencontré ou le projet à réaliser...'
+      : 'Ex. : mon ordinateur portable est devenu très lent depuis quelques semaines...';
+  }
+  document.querySelectorAll('input[name="client_type"]').forEach(r =>
+    r.addEventListener('change', () => setClientType(r.value)));
+
+  // Les boutons "Demander une intervention" présélectionnent le type de client
+  document.querySelectorAll('a[data-client-type]').forEach(a =>
+    a.addEventListener('click', () =>
+      setClientType(a.dataset.clientType === 'professionnel' ? 'Professionnel' : 'Particulier')));
+
+  // ── Vignettes : fenêtre de détail + pré-remplissage du formulaire ───────
+  const svcModal = document.getElementById('svcModal');
+  let svcCurrent = null;    // vignette ouverte
+  let autoMessage = '';     // dernier message pré-rempli (pour ne pas écraser un texte saisi)
+
+  document.querySelectorAll('.services-grid .service-card').forEach(card => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.insertAdjacentHTML('beforeend', '<span class="card-more">+ En savoir plus</span>');
+    card.addEventListener('click', () => openSvcModal(card));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSvcModal(card); }
+    });
+  });
+
+  function openSvcModal(card) {
+    svcCurrent = card;
+    const q = sel => card.querySelector(sel);
+    document.getElementById('svcModalIcon').textContent  = q('.service-icon')?.textContent || '';
+    document.getElementById('svcModalCat').textContent   = q('.service-category')?.textContent || '';
+    document.getElementById('svcModalTitle').textContent = q('.service-title').textContent;
+    const body = document.getElementById('svcModalBody');
+    body.innerHTML = '';
+    card.querySelectorAll('.service-desc, .perso-desc, .perso-examples, .service-tags')
+      .forEach(el => body.appendChild(el.cloneNode(true)));
+    const isPerso = card.dataset.clientType === 'particulier';
+    svcModal.classList.toggle('perso', isPerso);
+    document.getElementById('svcModalCta').classList.toggle('btn-green', isPerso);
+    svcModal.classList.add('open');
+    svcModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('svcModalClose').focus();
+  }
+
+  function closeSvcModal(restoreFocus = true) {
+    svcModal.classList.remove('open');
+    svcModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (restoreFocus && svcCurrent) svcCurrent.focus();
+  }
+
+  document.getElementById('svcModalClose').addEventListener('click', () => closeSvcModal());
+  svcModal.addEventListener('click', e => { if (e.target === svcModal) closeSvcModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && svcModal.classList.contains('open')) closeSvcModal();
+  });
+
+  document.getElementById('svcModalCta').addEventListener('click', () => {
+    const card    = svcCurrent;
+    const isPro   = card.dataset.clientType === 'professionnel';
+    const title   = card.querySelector('.service-title').textContent.trim();
+    setClientType(isPro ? 'Professionnel' : 'Particulier');
+    document.getElementById(isPro ? 'f_prestation' : 'f_prestation_perso').value = card.dataset.service;
+
+    // Pré-remplit le message seulement s'il est vide ou s'il vient d'un pré-remplissage précédent
+    const msg = document.getElementById('f_message');
+    if (!msg.value.trim() || msg.value === autoMessage) {
+      autoMessage = `Bonjour,\n\nJe souhaite être contacté(e) au sujet de la prestation « ${title} ».\n\n`;
+      msg.value = autoMessage;
+    }
+
+    closeSvcModal(false);
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    // Place le curseur dans le premier champ vide (sans perturber le défilement)
+    setTimeout(() => {
+      const first = ['f_prenom', 'f_nom', 'f_email'].map(id => document.getElementById(id)).find(el => !el.value.trim());
+      const target = first || msg;
+      target.focus({ preventScroll: true });
+      if (target === msg) msg.setSelectionRange(msg.value.length, msg.value.length);
+    }, 600);
+  });
+
+  // ── Anti-spam : rate limiting par email (localStorage) ──────────────────
+  const SPAM_MAX    = 5;        // max envois par adresse
+  const SPAM_WINDOW = 3600000;  // fenêtre de 1h en ms
+
+  function getSpamRecord(email) {
+    try {
+      const raw = localStorage.getItem('snp_spam_' + btoa(email));
+      return raw ? JSON.parse(raw) : { count: 0, first: Date.now() };
+    } catch { return { count: 0, first: Date.now() }; }
+  }
+
+  function checkSpam(email) {
+    const rec = getSpamRecord(email);
+    const now = Date.now();
+    // Réinitialise si la fenêtre est expirée
+    if (now - rec.first > SPAM_WINDOW) {
+      return { allowed: true, remaining: SPAM_MAX - 1, rec: { count: 0, first: now } };
+    }
+    if (rec.count >= SPAM_MAX) {
+      const wait = Math.ceil((SPAM_WINDOW - (now - rec.first)) / 60000);
+      return { allowed: false, wait };
+    }
+    return { allowed: true, remaining: SPAM_MAX - rec.count - 1, rec };
+  }
+
+  function recordSend(email) {
+    const rec = getSpamRecord(email);
+    const now = Date.now();
+    const newRec = (now - rec.first > SPAM_WINDOW)
+      ? { count: 1, first: now }
+      : { count: rec.count + 1, first: rec.first };
+    try { localStorage.setItem('snp_spam_' + btoa(email), JSON.stringify(newRec)); } catch {}
+  }
+
+  // ── Affichage erreur ────────────────────────────────────────────────────
+  function showError(msg) {
+    const el = document.getElementById('formError');
+    el.textContent = msg;
+    el.classList.add('visible');
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  function clearError() {
+    const el = document.getElementById('formError');
+    el.textContent = '';
+    el.classList.remove('visible');
+  }
+
+  // ── Soumission principale ───────────────────────────────────────────────
+  async function submitForm(e) {
+    e.preventDefault();
+    clearError();
+
+    const btn    = document.getElementById('f_submit');
+    const email  = document.getElementById('f_email').value.trim().toLowerCase();
+    const hp     = document.getElementById('hp_website').value;
+
+    // 1. Honeypot — si le champ caché est rempli, c'est un bot
+    if (hp) return;
+
+    // 2. Rate limiting
+    const spam = checkSpam(email);
+    if (!spam.allowed) {
+      showError(`⚠️ Limite atteinte : vous avez déjà envoyé ${SPAM_MAX} demandes depuis cette adresse. Réessayez dans ${spam.wait} minute(s).`);
+      return;
+    }
+
+    // 3. Récupération des valeurs
+    const clientType = document.querySelector('input[name="client_type"]:checked').value;
+    const isPro      = clientType === 'Professionnel';
+    const prenom     = document.getElementById('f_prenom').value.trim();
+    const nom        = document.getElementById('f_nom').value.trim();
+    const societe    = document.getElementById('f_societe').value.trim();
+    const ville      = document.getElementById('f_ville').value.trim();
+    const tel        = document.getElementById('f_tel').value.trim();
+    const prestation = document.getElementById(isPro ? 'f_prestation' : 'f_prestation_perso').value;
+    const message    = document.getElementById('f_message').value.trim();
+    const coches     = [...document.querySelectorAll('.cb_intervention:checked')].map(c => c.value).join(', ') || 'Non précisé';
+
+    if (!prenom || !nom || !email || !prestation || !message) {
+      showError('⚠️ Merci de remplir les champs obligatoires (*).');
+      return;
+    }
+
+    // 4. Envoi via EmailJS
+    btn.textContent = '⏳ Envoi en cours...';
+    btn.classList.add('loading');
+
+    const templateParams = {
+      from_name  : `${prenom} ${nom}`,
+      from_email : email,
+      client_type: clientType,
+      city       : ville   || 'Non renseignée',
+      // Préfixes pour que le type de client apparaisse aussi avec le modèle EmailJS existant
+      company    : isPro ? (societe || 'Non renseignée') : `Particulier${ville ? ' — ' + ville : ''}`,
+      phone      : tel     || 'Non renseigné',
+      service    : `[${clientType}] ${prestation}`,
+      intervention: coches,
+      message    : message,
+    };
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+      // Succès → enregistre l'envoi + affiche le message
+      recordSend(email);
+      document.getElementById('quoteForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      showError('❌ Une erreur est survenue lors de l\'envoi. Vérifiez vos clés EmailJS ou réessayez dans quelques instants.');
+      btn.textContent = '→ Envoyer ma demande';
+      btn.classList.remove('loading');
+    }
+  }
+
+  // ── Animations scroll ──────────────────────────────────────────────────
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.style.animation = 'fadeUp 0.5s ease both';
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.service-card, .step').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
